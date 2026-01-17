@@ -36,9 +36,13 @@ export default function Page() {
             Transform your ideas into stunning visuals instantly with our AI-powered image
             generation engine.
           </p>
-
+        <Link href="/draw">
+          <a className="block text-center border border-white bg-[#dedfe1] text-black rounded-md mt-6 py-3 px-6 font-firamono transition-colors duration-300 hover:bg-[#bcbbfb]">
+            Start Drawing
+          </a>
+        </Link>
           <Link href="/create">
-            <button className="px-6 sm:px-8 py-3 sm:py-4 bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold rounded-xl shadow-lg hover:bg-white/30 hover:border-white/50 transition-all duration-300 transform hover:scale-105 active:scale-95">
+            <button className="block text-center border border-white bg-[#dedfe1] text-black rounded-md mt-6 py-3 px-6 font-mono transition-colors duration-300 hover:bg-[#bcbbfb] duration-300 transform hover:scale-105 active:scale-95">
               Start Creating
             </button>
           </Link>
