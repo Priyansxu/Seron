@@ -1,322 +1,42 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import Link from "next/link"
-import { Zap } from "lucide-react"
-
-function ColorBends({
-  rotation = 45,
-  speed = 0.2,
-  colors = [],
-  transparent = true,
-  autoRotate = 0,
-  scale = 1,
-  frequency = 1,
-  warpStrength = 1,
-  mouseInfluence = 1,
-  parallax = 0.5,
-  noise = 0.1
-}) {
-  const containerRef = useRef(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let THREE;
-    
-    const initThree = async () => {
-      try {
-        THREE = await import('three');
-        
-        const container = containerRef.current;
-        if (!container) return;
-
-        const MAX_COLORS = 8;
-
-        const frag = `
-#define MAX_COLORS ${MAX_COLORS}
-uniform vec2 uCanvas;
-uniform float uTime;
-uniform float uSpeed;
-uniform vec2 uRot;
-uniform int uColorCount;
-uniform vec3 uColors[MAX_COLORS];
-uniform int uTransparent;
-uniform float uScale;
-uniform float uFrequency;
-uniform float uWarpStrength;
-uniform vec2 uPointer;
-uniform float uMouseInfluence;
-uniform float uParallax;
-uniform float uNoise;
-varying vec2 vUv;
-
-void main() {
-  float t = uTime * uSpeed;
-  vec2 p = vUv * 2.0 - 1.0;
-  p += uPointer * uParallax * 0.1;
-  vec2 rp = vec2(p.x * uRot.x - p.y * uRot.y, p.x * uRot.y + p.y * uRot.x);
-  vec2 q = vec2(rp.x * (uCanvas.x / uCanvas.y), rp.y);
-  q /= max(uScale, 0.0001);
-  q /= 0.5 + 0.2 * dot(q, q);
-  q += 0.2 * cos(t) - 7.56;
-  vec2 toward = (uPointer - rp);
-  q += toward * uMouseInfluence * 0.2;
-
-  vec3 col = vec3(0.0);
-  float a = 1.0;
-
-  if (uColorCount > 0) {
-    vec2 s = q;
-    vec3 sumCol = vec3(0.0);
-    float cover = 0.0;
-    for (int i = 0; i < MAX_COLORS; ++i) {
-      if (i >= uColorCount) break;
-      s -= 0.01;
-      vec2 r = sin(1.5 * (s.yx * uFrequency) + 2.0 * cos(s * uFrequency));
-      float m0 = length(r + sin(5.0 * r.y * uFrequency - 3.0 * t + float(i)) / 4.0);
-      float kBelow = clamp(uWarpStrength, 0.0, 1.0);
-      float kMix = pow(kBelow, 0.3);
-      float gain = 1.0 + max(uWarpStrength - 1.0, 0.0);
-      vec2 disp = (r - s) * kBelow;
-      vec2 warped = s + disp * gain;
-      float m1 = length(warped + sin(5.0 * warped.y * uFrequency - 3.0 * t + float(i)) / 4.0);
-      float m = mix(m0, m1, kMix);
-      float w = 1.0 - exp(-6.0 / exp(6.0 * m));
-      sumCol += uColors[i] * w;
-      cover = max(cover, w);
-    }
-    col = clamp(sumCol, 0.0, 1.0);
-    a = uTransparent > 0 ? cover : 1.0;
-  }
-
-  if (uNoise > 0.0001) {
-    float n = fract(sin(dot(gl_FragCoord.xy + vec2(uTime), vec2(12.9898, 78.233))) * 43758.5453123);
-    col += (n - 0.5) * uNoise;
-    col = clamp(col, 0.0, 1.0);
-  }
-
-  vec3 rgb = (uTransparent > 0) ? col * a : col;
-  gl_FragColor = vec4(rgb, a);
-}
-`;
-
-        const vert = `
-varying vec2 vUv;
-void main() {
-  vUv = uv;
-  gl_Position = vec4(position, 1.0);
-}
-`;
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-        const geometry = new THREE.PlaneGeometry(2, 2);
-        const uColorsArray = Array.from({ length: MAX_COLORS }, () => new THREE.Vector3(0, 0, 0));
-        
-        const material = new THREE.ShaderMaterial({
-          vertexShader: vert,
-          fragmentShader: frag,
-          uniforms: {
-            uCanvas: { value: new THREE.Vector2(1, 1) },
-            uTime: { value: 0 },
-            uSpeed: { value: speed },
-            uRot: { value: new THREE.Vector2(1, 0) },
-            uColorCount: { value: 0 },
-            uColors: { value: uColorsArray },
-            uTransparent: { value: transparent ? 1 : 0 },
-            uScale: { value: scale },
-            uFrequency: { value: frequency },
-            uWarpStrength: { value: warpStrength },
-            uPointer: { value: new THREE.Vector2(0, 0) },
-            uMouseInfluence: { value: mouseInfluence },
-            uParallax: { value: parallax },
-            uNoise: { value: noise }
-          },
-          premultipliedAlpha: true,
-          transparent: true
-        });
-
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
-        const renderer = new THREE.WebGLRenderer({
-          antialias: false,
-          powerPreference: 'high-performance',
-          alpha: true
-        });
-        
-        renderer.outputColorSpace = THREE.SRGBColorSpace;
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-        renderer.setClearColor(0x000000, 0);
-        
-        const canvas = renderer.domElement;
-        canvas.style.position = 'absolute';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.display = 'block';
-        
-        container.appendChild(canvas);
-
-        const clock = new THREE.Clock();
-        const pointerTarget = new THREE.Vector2(0, 0);
-        const pointerCurrent = new THREE.Vector2(0, 0);
-
-        const handleResize = () => {
-          const w = container.clientWidth || 1;
-          const h = container.clientHeight || 1;
-          renderer.setSize(w, h, false);
-          material.uniforms.uCanvas.value.set(w, h);
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
-        const toVec3 = hex => {
-          const h = hex.replace('#', '').trim();
-          const v = h.length === 3
-            ? [parseInt(h[0] + h[0], 16), parseInt(h[1] + h[1], 16), parseInt(h[2] + h[2], 16)]
-            : [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
-          return new THREE.Vector3(v[0] / 255, v[1] / 255, v[2] / 255);
-        };
-
-        const arr = (colors || []).filter(Boolean).slice(0, MAX_COLORS).map(toVec3);
-        for (let i = 0; i < MAX_COLORS; i++) {
-          const vec = material.uniforms.uColors.value[i];
-          if (i < arr.length) vec.copy(arr[i]);
-          else vec.set(0, 0, 0);
-        }
-        material.uniforms.uColorCount.value = arr.length;
-
-        const handlePointerMove = e => {
-          const rect = container.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
-          const y = -(((e.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
-          pointerTarget.set(x, y);
-        };
-
-        container.addEventListener('pointermove', handlePointerMove);
-
-        let raf;
-        const loop = () => {
-          const dt = clock.getDelta();
-          const elapsed = clock.elapsedTime;
-          material.uniforms.uTime.value = elapsed;
-
-          const deg = (rotation % 360) + autoRotate * elapsed;
-          const rad = (deg * Math.PI) / 180;
-          material.uniforms.uRot.value.set(Math.cos(rad), Math.sin(rad));
-
-          const amt = Math.min(1, dt * 8);
-          pointerCurrent.lerp(pointerTarget, amt);
-          material.uniforms.uPointer.value.copy(pointerCurrent);
-          
-          renderer.render(scene, camera);
-          raf = requestAnimationFrame(loop);
-        };
-        loop();
-
-        return () => {
-          cancelAnimationFrame(raf);
-          window.removeEventListener('resize', handleResize);
-          container.removeEventListener('pointermove', handlePointerMove);
-          geometry.dispose();
-          material.dispose();
-          renderer.dispose();
-          if (canvas.parentElement === container) {
-            container.removeChild(canvas);
-          }
-        };
-      } catch (err) {
-        console.error('ColorBends error:', err);
-        setError(err.message);
-      }
-    };
-
-    initThree();
-  }, [colors, frequency, mouseInfluence, noise, parallax, scale, speed, transparent, warpStrength, rotation, autoRotate]);
-
-  return (
-    <div 
-      ref={containerRef} 
-      className="fixed inset-0 w-full h-full"
-      style={{
-        background: error ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent'
-      }}
-    >
-      {error && (
-        <div className="absolute top-4 left-4 bg-red-500/20 text-white p-2 text-xs rounded">
-          ColorBends Error: {error}
-        </div>
-      )}
-    </div>
-  );
-}
+import Link from "next/link";
+import ColorBends from "@/components/ColorBends";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-black text-white flex flex-col relative overflow-hidden">
+    <div className="relative w-full h-screen overflow-hidden">
       {/* Background */}
-      <ColorBends
-        colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
-        rotation={30}
-        speed={0.3}
-        scale={1.2}
-        frequency={1.4}
-        warpStrength={1.2}
-        mouseInfluence={0.8}
-        parallax={0.6}
-        noise={0.08}
-        transparent
-      />
+      <div className="absolute inset-0 -z-10">
+        <ColorBends
+          rotation={30}
+          speed={0.2}
+          colors={["#ff6b6b", "#feca57", "#48dbfb", "#1dd1a1"]}
+          transparent={true}
+          autoRotate={0.05}
+          scale={1}
+          frequency={1.5}
+          warpStrength={1}
+          mouseInfluence={1}
+          parallax={0.3}
+          noise={0.05}
+        />
+      </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col min-h-screen">
-        <header className="backdrop-blur-md bg-black/20 border-b border-white/10 py-4 px-4">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <h1 className="text-2xl font-bold">Vega AI</h1>
-            <Link
-              href="/create"
-              className="text-sm text-white/70 hover:text-white transition-colors"
-            >
-              Create
-            </Link>
-          </div>
-        </header>
-
-        <section className="flex-1 flex items-center justify-center px-6">
-          <div className="max-w-2xl text-center space-y-8">
-            <h2 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight">
-              You have the power to reshape your own destiny
-            </h2>
-
-            <p className="text-white/80 text-lg sm:text-xl max-w-xl mx-auto">
-              Introducing Vega AI. Generates images from text, powered by Cloudflare.
-              Describe anything and turn it into visuals instantly.
-            </p>
-
-            <div className="flex items-center justify-center gap-4 pt-4">
-              <Link
-                href="/create"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-semibold hover:bg-white/90 transition-all shadow-lg shadow-white/20"
-              >
-                <Zap className="w-5 h-5" />
-                Get Started
-              </Link>
-              
-              <button className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-white/30 text-white rounded-full font-semibold hover:bg-white/10 transition-all backdrop-blur-sm">
-                Learn More
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <footer className="backdrop-blur-md bg-black/20 border-t border-white/10 py-4 text-center text-sm text-white/50">
-          Vega AI · Powered by Cloudflare
-        </footer>
+      <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-4">
+        <h1 className="text-5xl md:text-6xl font-bold text-white drop-shadow-lg mb-6">
+          Welcome to Vega AI
+        </h1>
+        <p className="text-lg md:text-xl text-white/80 max-w-2xl mb-8">
+          Unleash your creativity with AI-powered image generation. Explore, create, and transform ideas into stunning visuals instantly.
+        </p>
+        <Link href="/create">
+          <button className="px-8 py-4 bg-white text-black font-semibold rounded-xl shadow-lg hover:bg-gray-200 transition">
+            Start Creating
+          </button>
+        </Link>
       </div>
-    </main>
-  )
+    </div>
+  );
 }
