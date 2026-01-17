@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const apiToken = "qAj2Xuw7I688ymCSR6IBKf498ZTDdl32jOyy5RpP"
 
     if (!accountId || !apiToken) {
-      console.error("[v0] Missing Cloudflare credentials")
+      console.error("Missing Cloudflare credentials")
       return Response.json({ error: "Server configuration error" }, { status: 500 })
     }
 
