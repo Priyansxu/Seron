@@ -28,7 +28,7 @@ export default function Page() {
             <ArrowRight className="w-4 h-4 opacity-80" />
           </button>
 
-          <h2 className="text-3xl sm:text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.3)]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent drop-shadow-[0_0_1px_rgba(255,255,255,0.3)]">
             Unleashed, Vega AI
           </h2>
 
@@ -39,7 +39,7 @@ export default function Page() {
 
           <div className="w-full flex justify-center">
             <Link href="/create">
-              <button className="px-10 py-4 border border-white bg-[#dedfe1] text-black rounded-md font-mono transition-all duration-300 hover:bg-[#bcbbfb] transform hover:scale-105 active:scale-95 shadow-xl">
+              <button className="px-14 py-4 border border-white bg-[#dedfe1] text-black rounded-md font-mono transition-all duration-300 hover:bg-white/80 transform hover:scale-105 active:scale-95 shadow-xl opacity-90">
                 Start Creating
               </button>
             </Link>
