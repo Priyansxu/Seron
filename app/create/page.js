@@ -24,7 +24,7 @@ export default function CreatePage() {
     setError("")
 
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
@@ -61,7 +61,7 @@ export default function CreatePage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-black/90">
       <div className="absolute inset-0 -z-10">
-        <ColorBends rotation={-10} frequency={1} />
+        <ColorBends rotation={10} frequency={1} />
         <div className="absolute inset-0 bg-black/90" />
       </div>
 
