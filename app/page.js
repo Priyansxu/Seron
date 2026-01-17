@@ -7,17 +7,61 @@ import ColorBends from "@/components/ColorBends"
 export default function Page() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
-      {/* SVG Filter Definition for Inner Shadow */}
-      <svg className="absolute w-0 h-0">
-        <filter id="inner-glow">
-          <feOffset dx="0" dy="2" />
-          <feGaussianBlur stdDeviation="3" result="offset-blur" />
-          <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
-          <feFlood floodColor="white" floodOpacity="0.9" result="color" />
-          <feComposite operator="in" in="color" in2="inverse" result="shadow" />
-          <feComposite operator="over" in="shadow" in2="SourceGraphic" />
-        </filter>
-      </svg>
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        
+        .acme-text {
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.95) 0%,
+            rgba(200, 210, 255, 0.8) 25%,
+            rgba(160, 180, 255, 0.6) 50%,
+            rgba(140, 160, 255, 0.5) 75%,
+            rgba(120, 140, 255, 0.4) 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          text-shadow: 
+            0 0 40px rgba(255, 255, 255, 0.3),
+            0 0 80px rgba(180, 200, 255, 0.2),
+            0 2px 4px rgba(0, 0, 0, 0.1);
+          filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.15));
+        }
+        
+        .acme-text-stroke {
+          position: absolute;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(220, 230, 255, 0.3) 50%,
+            rgba(200, 210, 255, 0.2) 100%
+          );
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          -webkit-text-stroke: 2px rgba(255, 255, 255, 0.6);
+        }
+        
+        .glass-shine {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            110deg,
+            transparent 0%,
+            transparent 40%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 60%,
+            transparent 100%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 3s ease-in-out infinite;
+          pointer-events: none;
+        }
+      `}</style>
 
       <div className="absolute inset-0 -z-10">
         <ColorBends autoRotate={1} frequency={1} />
@@ -40,19 +84,17 @@ export default function Page() {
             <ArrowRight className="w-4 h-4 opacity-80" />
           </button>
 
-          {/* ACME STYLE HEADLINE:
-            1. text-[#d1d5db]/30: Light gray with transparency for the glass look.
-            2. [-webkit-text-stroke:2px_white]: Sharp white border.
-            3. [filter:url(#inner-glow)]: Applies the SVG inner shadow.
-          */}
-          <h2 
-            className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold mb-8 leading-tight tracking-tight
-            text-gray-300/40 
-            [-webkit-text-stroke:1.5px_rgba(255,255,255,0.8)]
-            [filter:url(#inner-glow)]"
-          >
-            Unleashed, Vega AI
-          </h2>
+          <div className="relative mb-8">
+            <h2 className="relative text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold leading-tight tracking-tight">
+              <span className="acme-text-stroke">
+                Unleashed, Vega AI
+              </span>
+              <span className="acme-text relative" style={{ position: 'absolute', top: 0, left: 0, right: 0 }}>
+                Unleashed, Vega AI
+              </span>
+            </h2>
+            <div className="glass-shine" />
+          </div>
 
           <p className="font-bold sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-12 leading-relaxed">
             Transform your ideas into stunning visuals instantly with our AI-powered image
