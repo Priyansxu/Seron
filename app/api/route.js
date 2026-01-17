@@ -21,14 +21,24 @@ export async function POST(request) {
           Authorization: `Bearer ${apiToken}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({
+          inputs: {
+            prompt,
+          },
+        }),
       }
     )
 
-    const data = await res.json()
+    const text = await res.text()
+
+    if (!res.ok) {
+      throw new Error(text || "Cloudflare request failed")
+    }
+
+    const data = JSON.parse(text)
 
     if (!data.success || !data.result?.image?.[0]) {
-      throw new Error("Generation failed")
+      throw new Error("Image generation failed")
     }
 
     return Response.json({
