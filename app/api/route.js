@@ -6,8 +6,8 @@ export async function POST(request) {
       return Response.json({ error: "Invalid prompt" }, { status: 400 })
     }
 
-    const accountId = process.env.CLOUDFLARE_ACCOUNT_ID
-    const apiToken = process.env.CLOUDFLARE_API_TOKEN
+    const accountId = "b6c89b2786be102a5e4d8704d79f60d3"
+    const apiToken = "qAj2Xuw7I688ymCSR6IBKf498ZTDdl32jOyy5RpP"
 
     if (!accountId || !apiToken) {
       return Response.json({ error: "Server configuration error" }, { status: 500 })
