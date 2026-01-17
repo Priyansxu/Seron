@@ -1,8 +1,6 @@
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata = {
   metadataBase: new URL('https://vega.js.org'),
   
@@ -45,7 +43,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="">
       <head />
       <body className="bg-black text-white">
         {children}
