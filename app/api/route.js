@@ -22,27 +22,21 @@ export async function POST(request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          inputs: {
-            prompt,
-          },
+          prompt,
         }),
       }
     )
 
-    const text = await res.text()
-
     if (!res.ok) {
-      throw new Error(text || "Cloudflare request failed")
+      const err = await res.text()
+      throw new Error(err || "Cloudflare request failed")
     }
 
-    const data = JSON.parse(text)
-
-    if (!data.success || !data.result?.image?.[0]) {
-      throw new Error("Image generation failed")
-    }
+    const buffer = await res.arrayBuffer()
+    const base64 = Buffer.from(buffer).toString("base64")
 
     return Response.json({
-      image: `data:image/png;base64,${data.result.image[0]}`,
+      image: `data:image/png;base64,${base64}`,
     })
   } catch (error) {
     return Response.json(
