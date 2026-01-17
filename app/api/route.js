@@ -1,5 +1,3 @@
-import { Cloudflare } from "@cloudflare/ai"
-
 export async function POST(request) {
   try {
     const { prompt } = await request.json()
@@ -15,32 +13,31 @@ export async function POST(request) {
       return Response.json({ error: "Server configuration error" }, { status: 500 })
     }
 
-    const client = new Cloudflare({
-      accountId,
-      apiToken,
-    })
-
-    const response = await client.post(
-      `/accounts/${accountId}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
+    const res = await fetch(
+      `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
       {
-        inputs: {
-          prompt,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+          "Content-Type": "application/json",
         },
-      },
+        body: JSON.stringify({ prompt }),
+      }
     )
 
-    if (!response.success || !response.result?.image?.[0]) {
-      throw new Error("Failed to generate image")
+    const data = await res.json()
+
+    if (!data.success || !data.result?.image?.[0]) {
+      throw new Error("Generation failed")
     }
 
-    const imageData = response.result.image[0]
-    const base64Image = `data:image/png;base64,${imageData}`
-
-    return Response.json({ image: base64Image })
+    return Response.json({
+      image: `data:image/png;base64,${data.result.image[0]}`,
+    })
   } catch (error) {
     return Response.json(
       { error: error instanceof Error ? error.message : "Failed to generate image" },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }
