@@ -69,7 +69,7 @@ export default function CreatePage() {
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <ColorBends rotation={-10} frequency={1} />
-        <div className="absolute inset-0 bg-black/90" />
+        <div className="absolute inset-0 bg-black/95" />
       </div>
 
       <Header />
