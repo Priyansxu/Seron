@@ -3,27 +3,24 @@
 import Link from "next/link";
 import ColorBends from "@/components/ColorBends";
 
-export default function HomePage() {
+export default function Page() {
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 -z-10">
-        <ColorBends
-          rotation={30}
-          speed={0.2}
-          colors={["#ff6b6b", "#feca57", "#48dbfb", "#1dd1a1"]}
-          transparent={true}
-          autoRotate={0.05}
-          scale={1}
-          frequency={1.5}
-          warpStrength={1}
-          mouseInfluence={1}
-          parallax={0.3}
-          noise={0.05}
-        />
+  
+    <ColorBends
+         colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
+         rotation={30}
+         speed={0.3}
+         scale={1.2}
+         frequency={1.4}
+         warpStrength={1.2}
+         mouseInfluence={0.8}
+         parallax={0.6}
+         noise={0.08}
+         transparent
+    />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-4">
         <h1 className="text-5xl md:text-6xl font-bold text-white drop-shadow-lg mb-6">
           Welcome to Vega AI
