@@ -12,7 +12,7 @@ export default function Page() {
         <ColorBends rotation={-10} frequency={1} />
       </div>
 
-      <header className="sticky top-4 mx-4 sm:mx-6 lg:mx-8 z-20 backdrop-blur-md bg-black/10 border border-white/10 shadow-lg rounded-xl">
+      <header className="sticky top-4 mx-4 sm:mx-6 lg:mx-8 z-20 backdrop-blur-md bg-black/10 border border-white/10 shadow-lg rounded-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <h1 className="text-2xl sm:text-3xl font-bold text-center text-white">
             VEGA AI
@@ -40,7 +40,7 @@ export default function Page() {
 
           <div className="w-full flex justify-center">
             <Link href="/create">
-              <button className="px-14 py-4 border border-white bg-[#dedfe1]/80 text-black rounded-md font-mono transition-all duration-300 hover:bg-white/80 transform hover:scale-105 active:scale-95 shadow-xl opacity-90">
+              <button className="px-14 py-4 border border-white bg-[#dedfe1]/80 text-black rounded-sm font-mona transition-all duration-300 hover:bg-white/80 transform hover:scale-105 active:scale-95 shadow-xl opacity-90">
                 Start Creating
               </button>
             </Link>
