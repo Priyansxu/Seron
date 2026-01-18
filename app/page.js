@@ -29,7 +29,7 @@ export default function Page() {
             <ArrowRight className="w-4 h-4 opacity-80" />
           </button>
 
-          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-mona font-bold mb-8 leading-tight bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-mona font-bold mb-8 leading-tight bg-gradient-to-b from-white to-gray-300 bg-clip-text text-transparent">
             Seamless. Vega AI
           </h2>
 
@@ -40,7 +40,7 @@ export default function Page() {
 
           <div className="w-full flex justify-center">
             <Link href="/create">
-              <button className="px-14 py-4 border border-white bg-[#dedfe1]/80 text-black rounded-md font-bold transition-all duration-300 hover:bg-white/80 transform hover:scale-105 active:scale-95 shadow-xl tracking-wider opacity-90">
+              <button className="px-14 py-4 border border-white/90 bg-[#dedfe1]/90 text-black rounded-md font-bold transition-all duration-300 hover:bg-white/80 transform hover:scale-105 active:scale-95 shadow-xl tracking-widest">
                 Start Creating
               </button>
             </Link>
