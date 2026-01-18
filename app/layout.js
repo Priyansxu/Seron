@@ -1,5 +1,6 @@
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata = {
   metadataBase: new URL('https://vega.js.org'),
@@ -48,6 +49,7 @@ export default function RootLayout({ children }) {
       <body className="bg-black text-white">
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
