@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="">
       <head />
-      <body className="bg-black text-white">
+      <body className="bg-black text-white font-outfit">
         {children}
         <Analytics />
         <SpeedInsights />
