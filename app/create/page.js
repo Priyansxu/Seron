@@ -34,7 +34,7 @@ export default function CreatePage() {
         if (!response.ok) {
         throw new Error(data.error || "Generation failed")
 
-
+      }
       setImage(data.image)
     } catch (err) {
       setError(err?.message || "Something went wrong")
