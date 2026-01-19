@@ -3,14 +3,14 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata = {
-  metadataBase: new URL('https://vega.js.org'),
+  metadataBase: new URL('https://seronai.vercel.app/'),
   
   title: {
-    default: 'Vega AI',
-    template: '%s | Vega AI',
+    default: 'Seron AI',
+    template: '%s | Seron AI',
   },
 
-  description: 'Vega AI — Fast, creative, and free AI image generation platform.',
+  description: 'Seron AI — Fast, creative, and free AI image generation platform.',
 
   alternates: {
     canonical: '/',
@@ -26,18 +26,18 @@ export const metadata = {
   },
 
   openGraph: {
-    title: 'Vega AI',
-    description: 'Generate stunning visuals instantly with Vega AI. No cost. No watermark.',
-    url: 'https://vega.js.org',
-    siteName: 'Vega AI',
+    title: 'Seron AI',
+    description: 'Generate stunning visuals instantly with Seron AI. No cost. No watermark.',
+    url: 'https://seronai.vercel.app/',
+    siteName: 'Seron AI',
     images: ['/og.png'],
     type: 'website',
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: 'Vega AI',
-    description: 'Create high-quality AI-generated images instantly with Vega AI.',
+    title: 'Seron AI',
+    description: 'Create high-quality AI-generated images instantly with Seron AI.',
     images: ['/og.png'],
   },
 }
