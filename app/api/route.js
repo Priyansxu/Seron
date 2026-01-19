@@ -14,7 +14,6 @@ export async function POST(request) {
       return Response.json({ error: "Server configuration error" }, { status: 500 })
     }
 
-    // SDXL Model
     if (model === "sdxl") {
       const response = await fetch(
         `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
@@ -49,7 +48,6 @@ export async function POST(request) {
       return Response.json({ image: base64Image })
     }
 
-    // FLUX Model
     if (model === "flux") {
       const formData = new FormData()
       formData.append("prompt", prompt)
