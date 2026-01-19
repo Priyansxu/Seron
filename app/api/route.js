@@ -1,6 +1,6 @@
 export async function POST(request) {
   try {
-    const { prompt } = await request.json()
+    const { prompt, width = 1024, height = 1024, steps = 25 } = await request.json()
 
     if (!prompt || typeof prompt !== "string") {
       return Response.json({ error: "Invalid prompt" }, { status: 400 })
@@ -14,15 +14,20 @@ export async function POST(request) {
       return Response.json({ error: "Server configuration error" }, { status: 500 })
     }
 
+    const formData = new FormData()
+    formData.append('prompt', prompt)
+    formData.append('width', width.toString())
+    formData.append('height', height.toString())
+    formData.append('steps', steps.toString())
+
     const response = await fetch(
-      `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/stabilityai/stable-diffusion-xl-base-1.0`,
+      `https://api.cloudflare.com/client/v4/accounts/${accountId}/ai/run/@cf/black-forest-labs/flux-2-klein-4b`,
       {
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiToken}`,
-          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt }),
+        body: formData,
       }
     )
 
@@ -40,9 +45,8 @@ export async function POST(request) {
       }
     }
 
-    const arrayBuffer = await response.arrayBuffer()
-    const base64 = Buffer.from(arrayBuffer).toString("base64")
-    const base64Image = `data:image/png;base64,${base64}`
+    const data = await response.json()
+    const base64Image = `data:image/png;base64,${data.image}`
 
     return Response.json({ image: base64Image })
   } catch (error) {
