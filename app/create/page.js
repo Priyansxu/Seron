@@ -15,6 +15,7 @@ export default function CreatePage() {
 
   const generateImage = async (e) => {
     e?.preventDefault()
+    if (loading) return
     if (!prompt.trim()) {
       setError("Please enter a prompt")
       return
@@ -31,10 +32,11 @@ export default function CreatePage() {
       })
 
       const data = await response.json()
-        if (!response.ok) {
-        throw new Error(data.error || "Generation failed")
 
+      if (!response.ok) {
+        throw new Error(data.error || "Generation failed")
       }
+
       setImage(data.image)
     } catch (err) {
       setError(err?.message || "Something went wrong")
@@ -48,7 +50,6 @@ export default function CreatePage() {
     const res = await fetch(image)
     const blob = await res.blob()
     const url = URL.createObjectURL(blob)
-
     const a = document.createElement("a")
     a.href = url
     a.download = `vega-ai-${Date.now()}.png`
@@ -63,8 +64,7 @@ export default function CreatePage() {
       </h1>
 
       <div
-        className="w-full max-w-3xl aspect-square rounded-lg overflow-hidden
-        flex items-center justify-center"
+        className="w-full max-w-3xl aspect-square rounded-lg overflow-hidden flex items-center justify-center"
         style={{ backgroundColor: "#111111" }}
       >
         {image ? (
@@ -94,21 +94,13 @@ export default function CreatePage() {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="A futuristic city floating above clouds..."
-          className="w-full resize-none px-3 py-2 rounded-lg
-          bg-black/60 border border-neutral-800
-          text-neutral-100 text-sm font-mono
-          placeholder:text-neutral-600
-          focus:outline-none focus:ring-2 focus:ring-neutral-700
-          hover:border-white/40 transition"
+          className="w-full resize-none px-3 py-2 rounded-lg bg-black/60 border border-neutral-800 text-neutral-100 text-sm font-mono placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700 hover:border-white/40 transition"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2
-          px-4 py-2 rounded-lg
-          bg-white text-black font-medium
-          disabled:opacity-50 transition"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white text-black font-medium disabled:opacity-50 transition"
         >
           {loading ? (
             <>
@@ -125,39 +117,29 @@ export default function CreatePage() {
       </form>
 
       {image && (
-        <div
-          className="mt-4 w-full max-w-3xl flex divide-x divide-neutral-800
-          rounded-lg overflow-hidden
-          bg-black/60 border border-neutral-800"
-        >
+        <div className="mt-4 w-full max-w-3xl flex divide-x divide-neutral-800 rounded-lg overflow-hidden bg-black/60 border border-neutral-800">
           <IconButton onClick={downloadImage} icon={Download} />
           <IconButton onClick={generateImage} icon={RotateCcw} />
         </div>
       )}
 
       {error && (
-        <div
-          className="mt-4 max-w-3xl w-full
-          rounded-lg border border-red-800 bg-red-900/30
-          px-3 py-2 text-xs font-mono text-red-300"
-        >
+        <div className="mt-4 max-w-3xl w-full rounded-lg border border-red-800 bg-red-900/30 px-3 py-2 text-xs font-mono text-red-300">
           Error: {error}
         </div>
       )}
 
       <footer className="fixed bottom-5 text-sm text-neutral-400 flex items-center justify-center gap-2">
-  <a
-    href="https://priyanshu.is-a.dev"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex items-center gap-1 hover:text-neutral-200 transition"
-  >
-    Made with
-     <FaHeart className="text-red-400" />
-    by Priyanshu
-       <ArrowUpRight className="w-4 h-4" />
-      </a>
-     </footer>
+        <a
+          href="https://priyanshu.is-a.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 hover:text-neutral-200 transition"
+        >
+          Made with <FaHeart className="text-red-500" /> by Priyanshu
+          <ArrowUpRight className="w-4 h-4" />
+        </a>
+      </footer>
     </div>
   )
 }
@@ -166,8 +148,7 @@ function IconButton({ onClick, icon: Icon }) {
   return (
     <button
       onClick={onClick}
-      className="flex-1 flex items-center justify-center py-2
-      text-neutral-300 hover:bg-neutral-900 transition"
+      className="flex-1 flex items-center justify-center py-2 text-neutral-300 hover:bg-neutral-900 transition"
     >
       <Icon className="w-4 h-4" />
     </button>
