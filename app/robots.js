@@ -9,6 +9,6 @@ export default function robots() {
         disallow: '/private/',
       },
     ],
-    sitemap: 'https://vega.js.org/sitemap.xml',
+    sitemap: 'https://seronai.vercel.app/sitemap.xml',
   }
 }
