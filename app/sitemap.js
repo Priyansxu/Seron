@@ -5,15 +5,15 @@ export default function sitemap() {
 
   return [
     {
-      url: 'https://seronai.vercel.app',
+      url: 'https://seron.is-a.software',
       lastModified,
-      changeFrequency: 'monthly',
+      changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://seronai.vercel.app/create',
+      url: 'https://seron.is-a.software/create',
       lastModified,
-      changeFrequency: 'monthly',
+      changeFrequency: 'weekly',
       priority: 0.8,
     },
   ]
