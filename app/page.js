@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <ColorBends rotation={-10} colors={"#ffffff"} frequency={1} />
+        <ColorBends rotation={-10} color="#ffffff frequency={1} />
       </div>
 
       <header className="sticky top-4 mx-4 sm:mx-6 lg:mx-8 z-20 backdrop-blur-md bg-black/10 border border-white/10 shadow-lg rounded-xl">
