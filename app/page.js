@@ -3,20 +3,14 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { BiSolidZap } from "react-icons/bi"
-import {
-  SignedIn,
-  SignedOut,
-  UserButton,
-  SignInButton,
-  SignUpButton,
-} from "@clerk/nextjs"
+import { SignedIn, SignedOut, UserButton, SignInButton, SignUpButton } from "@clerk/nextjs"
 import ColorBends from "@/components/ColorBends"
 
 export default function Page() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <ColorBends rotation={-10} frequency={1} />
+        <ColorBends rotation={-10} colors={["#ff5c7a", "#8a5cff", "#00ffd1"]} frequency={1} />
       </div>
 
       <header className="sticky top-4 mx-4 sm:mx-6 lg:mx-8 z-20 backdrop-blur-md bg-black/10 border border-white/10 shadow-lg rounded-xl">
