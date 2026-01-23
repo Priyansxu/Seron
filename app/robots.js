@@ -9,6 +9,6 @@ export default function robots() {
         disallow: '/private/',
       },
     ],
-    sitemap: 'https://seronai.vercel.app/sitemap.xml',
+    sitemap: 'https://seron.is-a.software/sitemap.xml',
   }
 }
