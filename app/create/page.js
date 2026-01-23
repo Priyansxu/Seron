@@ -139,7 +139,7 @@ export default function CreatePage() {
             {model === "sdxl"
               ? "SDXL"
               : model === "phoenix"
-              ? "PHOENIX"
+              ? "PHOENIX 1.0"
               : "FLUX.2 [Klein]"}
           </button>
 
