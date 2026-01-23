@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata = {
-  metadataBase: new URL('https://seronai.vercel.app/'),
+  metadataBase: new URL('https://seron.is-a.software'),
 
   title: {
     default: 'Seron AI',
@@ -29,7 +29,7 @@ export const metadata = {
   openGraph: {
     title: 'Seron AI',
     description: 'A multi-model AI platform for fast, high-quality image generation.',
-    url: 'https://seronai.vercel.app/',
+    url: 'https://seron.is-a.software',
     siteName: 'Seron AI',
     images: ['/og.png'],
     type: 'website',
