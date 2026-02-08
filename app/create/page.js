@@ -53,11 +53,11 @@ export default function CreatePage() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center px-4 py-10">
-      <h1 className="mb-6 -mt-6 text-sm font-semibold tracking-wide text-neutral-300">
+      <h1 className="mb-6 -mt-2 text-sm font-semibold tracking-wide text-neutral-300">
         SERON AI
       </h1>
 
-      <div className="w-full max-w-3xl aspect-square rounded-md border border-neutral-800 bg-neutral-950 flex items-center justify-center overflow-hidden">
+      <div className="w-full max-w-3xl aspect-square rounded-md font-mono bg-[#111111] flex items-center justify-center overflow-hidden">
         {image ? (
           <img
             ref={imageRef}
@@ -67,7 +67,7 @@ export default function CreatePage() {
           />
         ) : (
           <div className="text-center space-y-3">
-            <div className="w-10 h-10 mx-auto rounded-full font-mono bg-neutral-900 flex items-center justify-center">
+            <div className="w-10 h-10 mx-auto rounded-full bg-neutral-900/80 flex items-center justify-center">
               <IoSparkles className="w-4 h-4 text-neutral-400" />
             </div>
             <p className="text-xs text-neutral-500">
