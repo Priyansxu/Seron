@@ -4,7 +4,13 @@ import { useState, useRef } from "react"
 import { RiAiGenerate } from "react-icons/ri"
 import { IoSparkles } from "react-icons/io5"
 import { FaHeart } from "react-icons/fa"
-import { Download, RotateCcw, Loader, ArrowUpRight, Settings, Cpu, X } from "lucide-react"
+import {
+  Loader,
+  ArrowUpRight,
+  Settings,
+  Cpu,
+  X,
+} from "lucide-react"
 
 export default function CreatePage() {
   const [prompt, setPrompt] = useState("")
@@ -23,11 +29,7 @@ export default function CreatePage() {
 
   const generateImage = async (e) => {
     e?.preventDefault()
-    if (loading) return
-    if (!prompt.trim()) {
-      setError("Please enter a prompt")
-      return
-    }
+    if (loading || !prompt.trim()) return
 
     setLoading(true)
     setError("")
@@ -38,46 +40,31 @@ export default function CreatePage() {
           ? { prompt, model }
           : { prompt, model, width, height, steps }
 
-      const response = await fetch("/api", {
+      const res = await fetch("/api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || "Generation failed")
-      }
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed")
 
       setImage(data.image)
     } catch (err) {
-      setError(err?.message || "Something went wrong")
+      setError(err.message)
     } finally {
       setLoading(false)
     }
   }
 
-  const downloadImage = async () => {
-    if (!image) return
-    const res = await fetch(image)
-    const blob = await res.blob()
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = `SeronAi-${model}-${Date.now()}.png`
-    a.click()
-    URL.revokeObjectURL(url)
-  }
-
   return (
-    <div className="min-h-screen bg-black/90 flex flex-col items-center px-4 py-8">
-      <h1 className="mb-6 text-xl font-bold text-neutral-200">SERON AI</h1>
+    <div className="min-h-screen bg-black flex flex-col items-center px-4 py-10">
+      <h1 className="mb-6 text-sm font-semibold tracking-wide text-neutral-300">
+        SERON AI
+      </h1>
 
-      <div
-        className="w-full max-w-3xl aspect-square rounded-lg overflow-hidden flex items-center justify-center"
-        style={{ backgroundColor: "#111111" }}
-      >
+      {/* Preview */}
+      <div className="w-full max-w-3xl aspect-square rounded-md border border-neutral-800 bg-neutral-950 flex items-center justify-center overflow-hidden">
         {image ? (
           <img
             ref={imageRef}
@@ -86,30 +73,34 @@ export default function CreatePage() {
             className="max-w-full max-h-full object-contain"
           />
         ) : (
-          <div className="text-center space-y-3 font-mono">
-            <div className="w-12 h-12 mx-auto rounded-full bg-neutral-900 flex items-center justify-center">
-              <IoSparkles className="w-5 h-5 text-neutral-300" />
+          <div className="text-center space-y-3">
+            <div className="w-10 h-10 mx-auto rounded-full bg-neutral-900 flex items-center justify-center">
+              <IoSparkles className="w-4 h-4 text-neutral-400" />
             </div>
-            <p className="text-neutral-500 text-xs">
-              {loading ? "Generating image..." : "Your image will appear here"}
+            <p className="text-xs text-neutral-500">
+              {loading ? "Generating…" : "Your image will appear here"}
             </p>
           </div>
         )}
       </div>
 
-      <form onSubmit={generateImage} className="w-full max-w-3xl mt-6 space-y-3">
+      {/* Controls */}
+      <form
+        onSubmit={generateImage}
+        className="w-full max-w-3xl mt-6 space-y-3"
+      >
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="A futuristic city floating above clouds..."
+          placeholder="A futuristic city floating above clouds…"
           rows={3}
-          className="w-full resize-none px-3 py-2 rounded-lg bg-black/60 border border-neutral-800 text-neutral-100 text-sm font-mono placeholder:text-neutral-600 focus:outline-none focus:ring-2 [...]"
+          className="w-full resize-none rounded-md bg-neutral-950 border border-neutral-800 px-3 py-2 text-sm text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white text-black font-medium disabled:opacity-50 transition hover:bg-neutral-200"
+          className="w-full h-10 rounded-md bg-white text-black text-sm font-medium flex items-center justify-center gap-2 disabled:opacity-50 hover:bg-neutral-200 transition"
         >
           {loading ? (
             <>
@@ -124,143 +115,104 @@ export default function CreatePage() {
           )}
         </button>
 
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <button
             type="button"
             onClick={() => setShowModelPicker(true)}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-black/60 border border-neutral-800 text-neutral-300 text-sm font-medium hover:bg-neutral-900 transitio[...]"
+            className="flex-1 h-9 rounded-md border border-neutral-800 bg-neutral-950 text-xs text-neutral-300 flex items-center justify-center gap-2 hover:bg-neutral-900 transition"
           >
             <Cpu className="w-4 h-4" />
-            {model === "sdxl" ? "SDXL" : model === "phoenix" ? "PHOENIX 1.0" : "FLUX.2 [Klein]"}
+            {model === "sdxl"
+              ? "SDXL"
+              : model === "phoenix"
+              ? "PHOENIX 1.0"
+              : "FLUX.2 [Klein]"}
           </button>
 
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-black/60 border border-neutral-800 text-neutral-300 text-sm font-medium hover:bg-neutral-900 transitio[...]"
+            className="flex-1 h-9 rounded-md border border-neutral-800 bg-neutral-950 text-xs text-neutral-300 flex items-center justify-center gap-2 hover:bg-neutral-900 transition"
           >
             <Settings className="w-4 h-4" />
             Advanced
           </button>
         </div>
 
-        {showAdvanced && (model === "flux" || model === "phoenix") && (
-          <div className="p-4 rounded-lg bg-black/60 border border-neutral-800 space-y-4">
-            <div className="space-y-2">
-              <label className="text-neutral-300 text-xs font-mono">Width: {width}px</label>
-              <input
-                type="range"
-                min="512"
-                max="2048"
-                step="64"
-                value={width}
-                onChange={(e) => setWidth(Number(e.target.value))}
-                className="w-full accent-white"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-neutral-300 text-xs font-mono">Height: {height}px</label>
-              <input
-                type="range"
-                min="512"
-                max="2048"
-                step="64"
-                value={height}
-                onChange={(e) => setHeight(Number(e.target.value))}
-                className="w-full accent-white"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-neutral-300 text-xs font-mono">Steps: {steps}</label>
-              <input
-                type="range"
-                min="10"
-                max="50"
-                step="1"
-                value={steps}
-                onChange={(e) => setSteps(Number(e.target.value))}
-                className="w-full accent-white"
-              />
-            </div>
+        {showAdvanced && model !== "sdxl" && (
+          <div className="rounded-md border border-neutral-800 bg-neutral-950 p-4 space-y-4">
+            {[
+              ["Width", width, setWidth, 512, 2048, 64],
+              ["Height", height, setHeight, 512, 2048, 64],
+              ["Steps", steps, setSteps, 10, 50, 1],
+            ].map(([label, value, set, min, max, step]) => (
+              <div key={label} className="space-y-1">
+                <label className="text-xs text-neutral-400">
+                  {label}: {value}
+                </label>
+                <input
+                  type="range"
+                  min={min}
+                  max={max}
+                  step={step}
+                  value={value}
+                  onChange={(e) => set(Number(e.target.value))}
+                  className="w-full accent-white"
+                />
+              </div>
+            ))}
           </div>
         )}
+      </form>
 
-        {showModelPicker && (
-  <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
-    <div className="bg-[#0A0A0A] border border-[#0E0E0E] rounded-xl max-w-md w-full overflow-hidden">
-      <div className="flex justify-between items-center px-6 py-4 border-b border-neutral-800">
-        <h2 className="text-neutral-200 font-bold text-lg">Select Model</h2>
-        <button
-          onClick={() => setShowModelPicker(false)}
-          className="text-neutral-400 hover:text-neutral-200 transition"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
+      {/* Model Picker */}
+      {showModelPicker && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-xl border border-neutral-800 bg-neutral-950 overflow-hidden shadow-2xl">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-800">
+              <h2 className="text-sm font-semibold text-neutral-200">
+                Select model
+              </h2>
+              <button onClick={() => setShowModelPicker(false)}>
+                <X className="w-4 h-4 text-neutral-400 hover:text-neutral-200" />
+              </button>
+            </div>
 
-      <div className="divide-y divide-neutral-800">
-        {[
-          {
-            id: "sdxl",
-            title: "SDXL",
-            desc: "Stable Diffusion XL – Fast, reliable image generation",
-          },
-          {
-            id: "flux",
-            title: "FLUX.2 [Klein]",
-            desc: "Advanced model with customizable dimensions and steps",
-          },
-          {
-            id: "phoenix",
-            title: "PHOENIX 1.0",
-            desc: "Leonardo Phoenix – cinematic & stylized visuals",
-          },
-        ].map((item) => (
-          <button
-            key={item.id}
-            onClick={() => {
-              setModel(item.id)
-              setShowModelPicker(false)
-            }}
-            className={`w-full px-6 py-4 text-left transition ${
-              model === item.id ? "bg-white/10" : "hover:bg-white/5"
-            }`}
-          >
-            <h3 className="text-neutral-200 font-bold">{item.title}</h3>
-            <p className="text-neutral-400 text-xs mt-1 font-mono">
-              {item.desc}
-            </p>
-          </button>
-        ))}
-      </div>
-    </div>
-  </div>
-)}
+            <div className="divide-y divide-neutral-800">
+              {[
+                ["sdxl", "SDXL", "Fast, reliable image generation"],
+                ["flux", "FLUX.2 [Klein]", "Custom dimensions and steps"],
+                ["phoenix", "PHOENIX 1.0", "Cinematic & stylized visuals"],
+              ].map(([id, title, desc]) => (
+                <button
+                  key={id}
+                  onClick={() => {
+                    setModel(id)
+                    setShowModelPicker(false)
+                  }}
+                  className={`w-full px-6 py-4 text-left transition ${
+                    model === id
+                      ? "bg-white/10"
+                      : "hover:bg-white/5 active:bg-white/10"
+                  }`}
+                >
+                  <div className="text-sm font-medium text-neutral-200">
+                    {title}
+                  </div>
+                  <div className="text-xs text-neutral-500 mt-1">
+                    {desc}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
-      <footer className="fixed bottom-1 text-sm text-neutral-400 flex items-center justify-center gap-2">
-        <a
-          href="https://priyanshu.is-a.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-neutral-200 transition"
-        >
-          Made with <FaHeart className="text-red-500" /> by Priyanshu
-          <ArrowUpRight className="w-4 h-4" />
-        </a>
+      <footer className="mt-10 text-xs text-neutral-500 flex items-center gap-1">
+        Made with <FaHeart className="text-red-500" /> by Priyanshu
+        <ArrowUpRight className="w-3 h-3" />
       </footer>
     </div>
-  )
-}
-
-function IconButton({ onClick, icon: Icon }) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex-1 flex items-center justify-center py-2 text-neutral-300 hover:bg-neutral-900 transition"
-    >
-      <Icon className="w-4 h-4" />
-    </button>
   )
 }
