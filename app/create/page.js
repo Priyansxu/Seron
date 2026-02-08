@@ -187,93 +187,57 @@ export default function CreatePage() {
           </div>
         )}
 
-        {showAdvanced && model === "sdxl" && (
-          <div className="p-4 rounded-lg bg-black/60 border border-neutral-800">
-            <p className="text-neutral-400 text-xs font-mono text-center">
-              SDXL uses default settings (1024x1024)
+        {showModelPicker && (
+  <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+    <div className="bg-[#0A0A0A] border border-[#0E0E0E] rounded-xl max-w-md w-full overflow-hidden">
+      <div className="flex justify-between items-center px-6 py-4 border-b border-neutral-800">
+        <h2 className="text-neutral-200 font-bold text-lg">Select Model</h2>
+        <button
+          onClick={() => setShowModelPicker(false)}
+          className="text-neutral-400 hover:text-neutral-200 transition"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+
+      <div className="divide-y divide-neutral-800">
+        {[
+          {
+            id: "sdxl",
+            title: "SDXL",
+            desc: "Stable Diffusion XL – Fast, reliable image generation",
+          },
+          {
+            id: "flux",
+            title: "FLUX.2 [Klein]",
+            desc: "Advanced model with customizable dimensions and steps",
+          },
+          {
+            id: "phoenix",
+            title: "PHOENIX 1.0",
+            desc: "Leonardo Phoenix – cinematic & stylized visuals",
+          },
+        ].map((item) => (
+          <button
+            key={item.id}
+            onClick={() => {
+              setModel(item.id)
+              setShowModelPicker(false)
+            }}
+            className={`w-full px-6 py-4 text-left transition ${
+              model === item.id ? "bg-white/10" : "hover:bg-white/5"
+            }`}
+          >
+            <h3 className="text-neutral-200 font-bold">{item.title}</h3>
+            <p className="text-neutral-400 text-xs mt-1 font-mono">
+              {item.desc}
             </p>
-          </div>
-        )}
-      </form>
-
-      {image && (
-        <div className="mt-4 w-full max-w-3xl flex divide-x divide-neutral-800 rounded-lg overflow-hidden bg-black/60 border border-neutral-800">
-          <IconButton onClick={downloadImage} icon={Download} />
-          <IconButton onClick={generateImage} icon={RotateCcw} />
-        </div>
-      )}
-
-      {error && (
-        <div className="mt-4 max-w-3xl w-full rounded-lg border border-red-800 bg-red-900/30 px-3 py-2 text-xs font-mono text-red-300">
-          Error: {error}
-        </div>
-      )}
-
-      {showModelPicker && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
-          <div className="bg-[#0A0A0A] border border-[#0E0E0E] rounded-lg p-6 max-w-md w-full">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-neutral-200 font-bold text-lg">Select Model</h2>
-              <button onClick={() => setShowModelPicker(false)} className="text-neutral-400 hover:text-neutral-200 transition">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-3">
-              <button
-                onClick={() => {
-                  setModel("sdxl")
-                  setShowModelPicker(false)
-                }}
-                className={`w-full p-4 rounded-lg border-2 transition ${
-                  model === "sdxl" ? "border-white bg-white/10" : "border-neutral-800 hover:border-neutral-700"
-                }`}
-              >
-                <div className="text-left">
-                  <h3 className="text-neutral-200 font-bold">SDXL</h3>
-                  <p className="text-neutral-400 text-xs mt-1 font-mono">
-                    Stable Diffusion XL – Fast, reliable image generation
-                  </p>
-                </div>
-              </button>
-
-              <button
-                onClick={() => {
-                  setModel("flux")
-                  setShowModelPicker(false)
-                }}
-                className={`w-full p-4 rounded-lg border-2 transition ${
-                  model === "flux" ? "border-white bg-white/10" : "border-neutral-800 hover:border-neutral-700"
-                }`}
-              >
-                <div className="text-left">
-                  <h3 className="text-neutral-200 font-bold">FLUX.2 [Klein]</h3>
-                  <p className="text-neutral-400 text-xs mt-1 font-mono">
-                    Advanced model with customizable dimensions and steps
-                  </p>
-                </div>
-              </button>
-
-              <button
-                onClick={() => {
-                  setModel("phoenix")
-                  setShowModelPicker(false)
-                }}
-                className={`w-full p-4 rounded-lg border-2 transition ${
-                  model === "phoenix" ? "border-white bg-white/10" : "border-neutral-800 hover:border-neutral-700"
-                }`}
-              >
-                <div className="text-left">
-                  <h3 className="text-neutral-200 font-bold">PHOENIX 1.0</h3>
-                  <p className="text-neutral-400 text-xs mt-1 font-mono">
-                    Leonardo Phoenix – cinematic & stylized visuals
-                  </p>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
 
       <footer className="fixed bottom-1 text-sm text-neutral-400 flex items-center justify-center gap-2">
         <a
