@@ -2,6 +2,7 @@ import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { GeistSans, GeistMono } from 'geist/font'
 
 export const metadata = {
   metadataBase: new URL('https://seron.is-a.software'),
@@ -81,9 +82,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <head />
-        <body className="bg-black text-white font-outfit">
+      <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+        <body className="bg-black text-white font-sans">
           {children}
           <Analytics />
           <SpeedInsights />
