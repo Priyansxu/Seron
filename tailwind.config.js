@@ -7,8 +7,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-geist-mono)", "monospace"],
         mona: ["Mona Sans", "sans-serif"],
-        outfit: ["Outfit", "sans-serif"],
       },
     },
   },
