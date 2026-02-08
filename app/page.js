@@ -8,7 +8,7 @@ import ColorBends from "@/components/ColorBends"
 
 export default function Page() {
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-black">
+    <div className="relative w-full min-h-screen overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <ColorBends rotation={-10} color="#ffffff" frequency={1} />
       </div>
