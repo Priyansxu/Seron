@@ -69,7 +69,7 @@ export default function CreatePage() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center px-4 py-10">
-      <h1 className="mb-6 text-sm font-semibold tracking-wide text-neutral-300">
+      <h1 className="mb-6 -mt-2 text-sm font-semibold tracking-wide text-neutral-300">
         SERON AI
       </h1>
 
@@ -119,7 +119,7 @@ export default function CreatePage() {
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Golden hour landscape with rolling hills, river, and dramatic clouds..."
           rows={3}
-          className="w-full resize-none rounded-md bg-neutral-950 border border-neutral-800 px-3 py-2 text-xs text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700"
+          className="w-full resize-none rounded-md bg-neutral-950 border border-neutral-800 px-3 py-2 text-sm text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700"
         />
         {error && (
          <div className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400 font-mono">
@@ -237,7 +237,7 @@ export default function CreatePage() {
         </div>
       )}
 
-      <footer className="mt-10 text-xs text-neutral-500">
+      <footer className="mt-12 text-xs text-neutral-500">
         <Link
           href="https://priyanshu.is-a.dev"
           target="_blank"
