@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link";
+import Link from "next/link"
 import { useState, useRef } from "react"
 import { RiAiGenerate } from "react-icons/ri"
 import { IoSparkles } from "react-icons/io5"
@@ -85,7 +85,7 @@ export default function CreatePage() {
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="A futuristic city floating above clouds…"
+          placeholder="Golden hour landscape with rolling hills, river, and dramatic clouds..."
           rows={3}
           className="w-full resize-none rounded-md bg-neutral-950 border border-neutral-800 px-3 py-2 text-sm text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700"
         />
@@ -202,14 +202,12 @@ export default function CreatePage() {
       )}
 
       <footer className="mt-10 text-xs text-neutral-500">
-  <Link
-    href="https://priyanshu.is-a.dev"
-    target="_blank"
-    className="flex items-center gap-1 hover:text-neutral-700 transition"
-  >
-    Made with <FaHeart className="text-red-500" /> by Priyanshu
-    <ArrowUpRight className="w-3 h-3" />
-  </Link>
+       <Link
+        href="https://priyanshu.is-a.dev"
+        target="_blank"
+        className="flex items-center gap-1 hover:text-neutral-700 transition">Made with <FaHeart className="text-red-500" /> by Priyanshu
+       <ArrowUpRight className="w-3 h-3" />
+      </Link>
      </footer>
     </div>
   )
