@@ -25,8 +25,10 @@ export default function CreatePage() {
 
   const generateImage = async (e) => {
     e?.preventDefault()
-    if (loading || !prompt.trim()) return
-
+    if (!prompt.trim()) {
+      setError("Please enter a prompt")
+      return
+    }
     setLoading(true)
     setError("")
 
@@ -119,7 +121,11 @@ export default function CreatePage() {
           rows={3}
           className="w-full resize-none rounded-md bg-neutral-950 border border-neutral-800 px-3 py-2 text-sm text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700"
         />
-
+        {error && (
+         <div className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400 font-mono">
+         {error}
+        </div>
+       )}
         <button
           type="submit"
           disabled={loading}
