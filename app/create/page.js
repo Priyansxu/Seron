@@ -210,8 +210,8 @@ export default function CreatePage() {
       )}
 
       {showModelPicker && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
-          <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 max-w-md w-full">
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+          <div className="bg-[#0A0A0A] border border-[#0E0E0E] rounded-lg p-6 max-w-md w-full">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-neutral-200 font-bold text-lg">Select Model</h2>
               <button onClick={() => setShowModelPicker(false)} className="text-neutral-400 hover:text-neutral-200 transition">
