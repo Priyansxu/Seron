@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useState, useRef } from "react"
 import { RiAiGenerate } from "react-icons/ri"
 import { IoSparkles } from "react-icons/io5"
@@ -73,14 +74,14 @@ export default function CreatePage() {
       <div className="relative w-full max-w-3xl aspect-square rounded-md font-mono bg-[#111111] flex items-center justify-center overflow-hidden">
         {image ? (
           <>
-            <img
+            <Image
               ref={imageRef}
               src={image}
               alt="Generated"
               className="max-w-full max-h-full object-contain"
             />
 
-            <div className="absolute bottom-3 right-3 flex rounded-md overflow-hidden border border-neutral-800 bg-neutral-950">
+            <div className="absolute bottom-3 right-3 flex rounded-md overflow-hidden border border-neutral-800 bg-neutral-950/80 backdrop-blur-md">
               <button
                 onClick={downloadImage}
                 className="flex items-center justify-center px-3 py-2 text-neutral-300 hover:bg-neutral-900 transition"
