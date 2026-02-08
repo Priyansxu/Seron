@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link";
 import { useState, useRef } from "react"
 import { RiAiGenerate } from "react-icons/ri"
 import { IoSparkles } from "react-icons/io5"
@@ -53,7 +54,7 @@ export default function CreatePage() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center px-4 py-10">
-      <h1 className="mb-6 -mt-2 text-sm font-semibold tracking-wide text-neutral-300">
+      <h1 className="mb-6 text-sm font-semibold tracking-wide text-neutral-300">
         SERON AI
       </h1>
 
@@ -200,10 +201,17 @@ export default function CreatePage() {
         </div>
       )}
 
-      <footer className="mt-10 text-xs text-neutral-500 flex items-center gap-1">
-        Made with <FaHeart className="text-red-500" /> by Priyanshu
-        <ArrowUpRight className="w-3 h-3" />
-      </footer>
+      <footer className="mt-10 text-xs text-neutral-500">
+  <Link
+    href="https://priyanshu.is-a.dev"
+    target="_blank"
+    className="flex items-center gap-1 hover:text-neutral-700 transition"
+  >
+    Made with <FaHeart className="text-red-500" /> by Priyanshu
+    <ArrowUpRight className="w-3 h-3" />
+  </Link>
+     </footer>
     </div>
   )
 }
+
