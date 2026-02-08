@@ -5,7 +5,7 @@ import { useState, useRef } from "react"
 import { RiAiGenerate } from "react-icons/ri"
 import { IoSparkles } from "react-icons/io5"
 import { FaHeart } from "react-icons/fa"
-import { Loader, ArrowUpRight, Settings, Cpu, X } from "lucide-react"
+import { Loader, ArrowUpRight, Settings, Cpu, X, Download, RotateCcw } from "lucide-react"
 
 export default function CreatePage() {
   const [prompt, setPrompt] = useState("")
@@ -52,20 +52,49 @@ export default function CreatePage() {
     }
   }
 
+  const downloadImage = async () => {
+    if (!image) return
+    const res = await fetch(image)
+    const blob = await res.blob()
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `SeronAi-${model}-${Date.now()}.png`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <div className="min-h-screen bg-black flex flex-col items-center px-4 py-10">
       <h1 className="mb-6 text-sm font-semibold tracking-wide text-neutral-300">
         SERON AI
       </h1>
 
-      <div className="w-full max-w-3xl aspect-square rounded-md font-mono bg-[#111111] flex items-center justify-center overflow-hidden">
+      <div className="relative w-full max-w-3xl aspect-square rounded-md font-mono bg-[#111111] flex items-center justify-center overflow-hidden">
         {image ? (
-          <img
-            ref={imageRef}
-            src={image}
-            alt="Generated"
-            className="max-w-full max-h-full object-contain"
-          />
+          <>
+            <img
+              ref={imageRef}
+              src={image}
+              alt="Generated"
+              className="max-w-full max-h-full object-contain"
+            />
+
+            <div className="absolute bottom-3 right-3 flex rounded-md overflow-hidden border border-neutral-800 bg-neutral-950">
+              <button
+                onClick={downloadImage}
+                className="flex items-center justify-center px-3 py-2 text-neutral-300 hover:bg-neutral-900 transition"
+              >
+                <Download className="w-4 h-4" />
+              </button>
+              <button
+                onClick={generateImage}
+                className="flex items-center justify-center px-3 py-2 text-neutral-300 hover:bg-neutral-900 transition border-l border-neutral-800"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+            </div>
+          </>
         ) : (
           <div className="text-center space-y-3">
             <div className="w-10 h-10 mx-auto rounded-full bg-neutral-900/80 flex items-center justify-center">
@@ -202,14 +231,15 @@ export default function CreatePage() {
       )}
 
       <footer className="mt-10 text-xs text-neutral-500">
-       <Link
-        href="https://priyanshu.is-a.dev"
-        target="_blank"
-        className="flex items-center gap-1 hover:text-neutral-700 transition">Made with <FaHeart className="text-red-500" /> by Priyanshu
-       <ArrowUpRight className="w-3 h-3" />
-      </Link>
-     </footer>
+        <Link
+          href="https://priyanshu.is-a.dev"
+          target="_blank"
+          className="flex items-center gap-1 hover:text-neutral-700 transition"
+        >
+          Made with <FaHeart className="text-red-500" /> by Priyanshu
+          <ArrowUpRight className="w-3 h-3" />
+        </Link>
+      </footer>
     </div>
   )
 }
-
