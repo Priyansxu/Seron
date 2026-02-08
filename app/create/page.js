@@ -4,13 +4,7 @@ import { useState, useRef } from "react"
 import { RiAiGenerate } from "react-icons/ri"
 import { IoSparkles } from "react-icons/io5"
 import { FaHeart } from "react-icons/fa"
-import {
-  Loader,
-  ArrowUpRight,
-  Settings,
-  Cpu,
-  X,
-} from "lucide-react"
+import { Loader, ArrowUpRight, Settings, Cpu, X } from "lucide-react"
 
 export default function CreatePage() {
   const [prompt, setPrompt] = useState("")
@@ -59,11 +53,10 @@ export default function CreatePage() {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center px-4 py-10">
-      <h1 className="mb-6 text-sm font-semibold tracking-wide text-neutral-300">
+      <h1 className="mb-6 -mt-6 text-sm font-semibold tracking-wide text-neutral-300">
         SERON AI
       </h1>
 
-      {/* Preview */}
       <div className="w-full max-w-3xl aspect-square rounded-md border border-neutral-800 bg-neutral-950 flex items-center justify-center overflow-hidden">
         {image ? (
           <img
@@ -74,7 +67,7 @@ export default function CreatePage() {
           />
         ) : (
           <div className="text-center space-y-3">
-            <div className="w-10 h-10 mx-auto rounded-full bg-neutral-900 flex items-center justify-center">
+            <div className="w-10 h-10 mx-auto rounded-full font-mono bg-neutral-900 flex items-center justify-center">
               <IoSparkles className="w-4 h-4 text-neutral-400" />
             </div>
             <p className="text-xs text-neutral-500">
@@ -84,7 +77,6 @@ export default function CreatePage() {
         )}
       </div>
 
-      {/* Controls */}
       <form
         onSubmit={generateImage}
         className="w-full max-w-3xl mt-6 space-y-3"
@@ -165,7 +157,6 @@ export default function CreatePage() {
         )}
       </form>
 
-      {/* Model Picker */}
       {showModelPicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="w-full max-w-md rounded-xl border border-neutral-800 bg-neutral-950 overflow-hidden shadow-2xl">
