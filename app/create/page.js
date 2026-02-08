@@ -81,7 +81,7 @@ export default function CreatePage() {
               className="max-w-full max-h-full object-contain"
             />
 
-            <div className="absolute bottom-3 right-3 flex rounded-md overflow-hidden border border-neutral-800 bg-neutral-950/80 backdrop-blur-md">
+            <div className="absolute bottom-3 right-3 flex rounded-md overflow-hidden border border-neutral-800 bg-neutral-950/50 backdrop-blur-md">
               <button
                 onClick={downloadImage}
                 className="flex items-center justify-center px-3 py-2 text-neutral-300 hover:bg-neutral-900 transition"
