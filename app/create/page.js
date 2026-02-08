@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { useState, useRef } from "react"
 import { RiAiGenerate } from "react-icons/ri"
-import { IoSparkles } from "react-icons/io5"
+import { IoSparklesSharp } from "react-icons/io5"
 import { FaHeart } from "react-icons/fa"
 import { Loader, ArrowUpRight, Settings, Cpu, X, Download, RotateCcw } from "lucide-react"
 
@@ -101,7 +101,7 @@ export default function CreatePage() {
         ) : (
           <div className="text-center space-y-3">
             <div className="w-10 h-10 mx-auto rounded-full bg-neutral-900/80 flex items-center justify-center">
-              <IoSparkles className="w-4 h-4 text-neutral-400" />
+              <IoSparklesSharp className="w-4 h-4 text-neutral-400" />
             </div>
             <p className="text-xs text-neutral-500">
               {loading ? "Generating…" : "Your image will appear here"}
@@ -119,7 +119,7 @@ export default function CreatePage() {
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Golden hour landscape with rolling hills, river, and dramatic clouds..."
           rows={3}
-          className="w-full resize-none rounded-md bg-neutral-950 border border-neutral-800 px-3 py-2 text-sm text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700"
+          className="w-full resize-none rounded-md bg-neutral-950 border border-neutral-800 px-3 py-2 text-xs text-neutral-100 placeholder:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-neutral-700"
         />
         {error && (
          <div className="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400 font-mono">
