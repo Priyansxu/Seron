@@ -73,11 +73,11 @@ export default function Page() {
             </SignedIn>
 
             <SignedOut>
-              <SignUpButton mode="modal">
+              <SignInButton mode="modal">
                 <button className="h-11 px-8 rounded-md border border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition">
                   Get started
                 </button>
-              </SignUpButton>
+              </SignInButton>
             </SignedOut>
           </div>
         </div>
