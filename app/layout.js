@@ -1,5 +1,6 @@
 import './globals.css'
 import { ClerkProvider } from '@clerk/nextjs'
+import { dark } from '@clerk/themes'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GeistSans, GeistMono } from 'geist/font'
@@ -12,7 +13,8 @@ export const metadata = {
     template: '%s | Seron AI',
   },
 
-  description: 'Multi-model AI image generation platform featuring models like Flux 2 Klein & Phoenix 1.0. Create stunning AI art with the new generation models',
+  description:
+    'Multi-model AI image generation platform featuring models like Flux 2 Klein & Phoenix 1.0. Create stunning AI art with the new generation models',
 
   keywords: [
     'Flux 2 Klein',
@@ -62,8 +64,10 @@ export const metadata = {
   },
 
   openGraph: {
-    title: 'Seron AI - Flux, Phoenix, SDXL & Stability AI Image Generator',
-    description: 'Multi-model AI image generation platform featuring Flux 2 Klein, Phoenix 1.0, SDXL, Stability AI, and Leonardo AI. Create stunning AI art instantly.',
+    title:
+      'Seron AI - Flux, Phoenix, SDXL & Stability AI Image Generator',
+    description:
+      'Multi-model AI image generation platform featuring Flux 2 Klein, Phoenix 1.0, SDXL, Stability AI, and Leonardo AI. Create stunning AI art instantly.',
     url: 'https://seron.is-an.ai',
     siteName: 'Seron AI',
     images: ['/og.png'],
@@ -74,16 +78,33 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Seron AI - Flux, Phoenix, SDXL & Stability AI',
-    description: 'Multi-model AI platform featuring Flux 2 Klein, Phoenix 1.0, SDXL, Stability AI & Leonardo. Generate high-quality AI images instantly.',
+    description:
+      'Multi-model AI platform featuring Flux 2 Klein, Phoenix 1.0, SDXL, Stability AI & Leonardo. Generate high-quality AI images instantly.',
     images: ['/og.png'],
   },
 }
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-        <body className="bg-black text-white font-sans">
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        variables: {
+          colorBackground: '#000000',
+          colorPrimary: '#ffffff',
+          colorText: '#ffffff',
+          colorInputBackground: '#111111',
+          colorInputText: '#ffffff',
+          colorNeutral: '#888888',
+          borderRadius: '8px',
+        },
+      }}
+    >
+      <html
+        lang="en"
+        className={`${GeistSans.variable} ${GeistMono.variable}`}
+      >
+        <body className="bg-black text-white font-sans antialiased">
           {children}
           <Analytics />
           <SpeedInsights />
