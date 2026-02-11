@@ -90,7 +90,7 @@ export default function RootLayout({ children }) {
       appearance={{
         baseTheme: dark,
         variables: {
-          colorBackground: '#000000',
+          colorBackground: '#0a0a0a',
           colorPrimary: '#ffffff',
           colorText: '#ffffff',
           colorInputBackground: '#111111',
