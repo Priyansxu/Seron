@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GeistSans, GeistMono } from 'geist/font'
 
 export const metadata = {
-  metadataBase: new URL('https://seron.is-a.software'),
+  metadataBase: new URL('https://seron.is-an.ai'),
 
   title: {
     default: 'Seron AI - Just Imagine',
@@ -64,7 +64,7 @@ export const metadata = {
   openGraph: {
     title: 'Seron AI - Flux, Phoenix, SDXL & Stability AI Image Generator',
     description: 'Multi-model AI image generation platform featuring Flux 2 Klein, Phoenix 1.0, SDXL, Stability AI, and Leonardo AI. Create stunning AI art instantly.',
-    url: 'https://seron.is-a.software',
+    url: 'https://seron.is-an.ai',
     siteName: 'Seron AI',
     images: ['/og.png'],
     type: 'website',
