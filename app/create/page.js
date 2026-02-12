@@ -208,9 +208,9 @@ export default function CreatePage() {
 
             <div className="divide-y divide-neutral-800">
               {[
-                ["sdxl", "SDXL", "Fast, reliable image generation"],
-                ["flux", "FLUX.2 [Klein]", "Custom dimensions and steps"],
-                ["phoenix", "PHOENIX 1.0", "Cinematic & stylized visuals"],
+                ["sdxl", "SDXL", "[Legacy] High-detail, photoreal outputs."],
+                ["flux", "FLUX.2 [Klein]", "Ultra-fast, lightweight generation and realistic."],
+                ["phoenix", "PHOENIX 1.0", "Strong prompt accuracy, clean text rendering."],
               ].map(([id, title, desc]) => (
                 <button
                   key={id}
