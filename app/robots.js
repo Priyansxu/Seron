@@ -9,6 +9,6 @@ export default function robots() {
         disallow: '/private/',
       },
     ],
-    sitemap: 'https://seron.is-a.software/sitemap.xml',
+    sitemap: 'https://seron.is-an.ai/sitemap.xml',
   }
 }
