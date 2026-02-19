@@ -5,13 +5,13 @@ export default function sitemap() {
 
   return [
     {
-      url: 'https://seron.is-a.software',
+      url: 'https://seron.is-an.ai',
       lastModified,
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://seron.is-a.software/create',
+      url: 'https://seron.is-an.ai/create',
       lastModified,
       changeFrequency: 'weekly',
       priority: 0.8,
