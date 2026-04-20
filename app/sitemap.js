@@ -1,14 +1,16 @@
-import type { MetadataRoute } from 'next'
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default function sitemap() {
   return [
     {
       url: 'https://seron.is-an.ai/',
       lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1.0,
     },
     {
       url: 'https://seron.is-an.ai/create/',
       lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
   ]
 }
