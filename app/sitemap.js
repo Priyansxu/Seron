@@ -9,7 +9,7 @@ export default function sitemap() {
     {
       url: 'https://seron.is-an.ai/create/',
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'weakly',
       priority: 0.8,
     },
   ]
