@@ -1,20 +1,14 @@
-export const dynamic = 'force-static'
+import type { MetadataRoute } from 'next'
 
-export default function sitemap() {
-  const lastModified = new Date()
-
+export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://seron.is-an.ai',
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 1,
+      url: 'https://seron.is-an.ai/',
+      lastModified: new Date(),
     },
     {
-      url: 'https://seron.is-an.ai/create',
-      lastModified,
-      changeFrequency: 'weekly',
-      priority: 0.8,
+      url: 'https://seron.is-an.ai/create/',
+      lastModified: new Date(),
     },
   ]
 }
